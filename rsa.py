@@ -17,18 +17,24 @@ class RSA:
 			x, y = y, x%y
 		return x
 
-	def test_prime(self, x, y):
-		return True
+	def test_prime(self):
+		if self.gcd(self.p, self.q) == 1:
+			return True
+		else:
+			return False
 
 	def calc_congruence(self, e):
 		x = e
 		return x
 
 	def calc_keys(self):
-		pk = (,)
-		sk = (,)
+		if self.test_prime():
+			pk = (3,self.p)
+			sk = (1,self.q)
+		else:
+			return 'There was an error'
 
-		return {pk, sk}
+		return [pk, sk]
 
 	def encrypt(self, message):
 		msg = message

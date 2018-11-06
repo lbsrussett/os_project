@@ -6,11 +6,11 @@ class Cryptosystem:
 
 
 
-if __name__ == '__main__':
+	if __name__ == '__main__':
 
-	p1 = Person('Alice')
-	p2 = Person('Bob')
-	p1_rsa = RSA(181, 373)
-	p2_rsa = RSA(193, 307)
+		p1 = person.Person('Alice',181, 373)
+		p2 = person.Person('Bob',193, 307)
 
+		p1.set_keys()
+		p2.set_keys()
 
