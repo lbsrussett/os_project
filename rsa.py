@@ -28,13 +28,25 @@ class RSA:
 		return x
 
 	def calc_keys(self):
-		if self.test_prime():
-			pk = (3,self.p)
-			sk = (1,self.q)
-		else:
-			return 'There was an error'
+		modulus = self.p * self.q 
+		totient = (self.p - 1) * (self.q - 1) 
+		exponent = 65537
 
-		return [pk, sk]
+		# check that gcd of exponent and totient is 1
+		while (self.gcd(exponent, totient) != 1):
+			exponent += 1
+
+		# set the public key 
+		pk = (exponent, modulus)
+
+		# calculate the private key 
+		d = 1
+		while(self.gcd(exponent*d, totient) != 1):
+			d += 1
+
+		sk = (d, modulus)
+
+		return (pk, sk)
 
 	def encrypt(self, message):
 		msg = message
