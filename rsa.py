@@ -1,13 +1,7 @@
 import person
-#encrypt function
-#decrypt function
-#gcd
-#test_prime
-#calc_congruence
+import numpy as np 
 
-class RSA:
-	# key_length = 3
-
+class RSA(object):
 	def __init__(self, p, q):
 		self.p = p
 		self.q = q
@@ -22,46 +16,42 @@ class RSA:
 			return True
 		else:
 			return False
-
-	def calc_congruence(self, e):
-		x = e
-		return x
+	
+	def egcd(self, a, b):
+		if a == 0:
+			return (b, 0, 1)
+		else:
+			g, x, y = self.egcd(b % a, a)
+			return (g, y - (b // a) * x, x)
 
 	def calc_keys(self):
 		modulus = self.p * self.q 
 		totient = (self.p - 1) * (self.q - 1) 
-		exponent = 65537
 
 		# check that gcd of exponent and totient is 1
+		exponent = np.random.randint(3, 100000)
 		while (self.gcd(exponent, totient) != 1):
-			exponent += 1
+			exponent = np.random.randint(3, 100000)
+		
+		assert exponent < modulus 
 
 		# set the public key 
 		pk = (exponent, modulus)
 
 		# calculate the private key 
-		d = 1
-		while(self.gcd(exponent*d, totient) != 1):
-			d += 1
-
+		ans = self.egcd(exponent, totient)
+		d = int(ans[1] % totient)
+		assert (d * exponent) % totient == 1
 		sk = (d, modulus)
 
 		return (pk, sk)
 
-	def encrypt(self, message, key):
-		msg = message
-
-		# convert to ascii 
-		msg = ''.join(str(ord(c)) for c in msg)
-		msg = int(msg)
+	def encrypt(self, msg, key):
 		exponent, modulus = key 
-		cipher_text = msg ** exponent % modulus 
+		cipher_text = pow(msg, exponent, modulus)
 		return cipher_text
 
-	def decrypt(self, message, key):
-		msg = message
+	def decrypt(self, msg, key):
 		d, modulus = key 
-		plain_text = msg ** d % modulus 
-		plain_text = [plain_text[i:i+3] for i in range(0, len(plain_text), 3)]
-		plain_text = [chr(i) for i in plain_text]
-		return msg
+		plain_text = pow(msg, d, modulus)
+		return plain_text
