@@ -12,21 +12,19 @@ class Person:
 	def __init__(self, name, p, q):
 		self.name = name
 		self.rsa = rsa.RSA(p, q)
+		self.pk = (0,0)
+		self.sk = (0,0)
 
 	def set_keys(self):
-		keys = self.rsa.calc_keys()
-		print('Public Key for ' + self.name + ' = ' + str(keys[0]))
-		print('Secret Key for ' + self.name + ' = ' + str(keys[1]))
+		self.pk, self.sk = self.rsa.calc_keys()
+		# print('Public Key for ' + self.name + ' = ' + pk)
+		# print('Secret Key for ' + self.name + ' = ' + sk)
 		
 
-	def create_message(self):
-		msg = ''
-		return msg
+	def send_message(self, msg):
+		cipher_text = self.rsa.encrypt(msg, self.pk)
+		return cipher_text
 
-	def send_message(self):
-		msg = self.create_message('Test')
-		self.rsa.encrypt(msg)
-
-
-	def receive_message(self, msg):
-		self.rsa.decrypt(msg)
+	def receive_message(self, cipher_text):
+		plain_text = self.rsa.decrypt(cipher_text, self. sk)
+		return plain_text
