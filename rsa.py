@@ -48,10 +48,20 @@ class RSA:
 
 		return (pk, sk)
 
-	def encrypt(self, message):
+	def encrypt(self, message, key):
 		msg = message
-		return msg
 
-	def decrypt(self, message):
+		# convert to ascii 
+		msg = ''.join(str(ord(c)) for c in msg)
+		msg = int(msg)
+		exponent, modulus = key 
+		cipher_text = msg ** exponent % modulus 
+		return cipher_text
+
+	def decrypt(self, message, key):
 		msg = message
+		d, modulus = key 
+		plain_text = msg ** d % modulus 
+		plain_text = [plain_text[i:i+3] for i in range(0, len(plain_text), 3)]
+		plain_text = [chr(i) for i in plain_text]
 		return msg
