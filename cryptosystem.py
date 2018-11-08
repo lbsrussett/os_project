@@ -1,21 +1,45 @@
 import rsa
 import person
 import sys
+import txt_to_decimal as td
 
-class Cryptosystem:
+# class Cryptosystem:
 
 
+if __name__ == "__main__":
+    # convert text to an integer
 
-	if __name__ == '__main__':
+    with open('input.txt', 'r') as f:
+    	content = f.readlines()
+    	messages = []
+    	for c in content:
+    		messages.append(c)
 
-		p1 = person.Person('Alice',373,709)
-		p2 = person.Person('Bob',307, 653)
+    txt = messages[0].rstrip()
+    print("Message to encrypt: {}".format(txt))
+    block_int = td.to_decimal(txt)
+    print("Block int: {}".format(block_int))
+    p1 = person.Person('Alice',pow(2,31) - 1,pow(2,61) - 1)
+    p2 = person.Person('Bob',307, 653)
+    
+    p1_pk, p1_sk = p1.set_keys()
+    p2_pk, p2_sk = p2.set_keys()
+    print("public key for " + p1.name + " : {}".format(p1.pk))
+    print("private key for " + p1.name + " : {}".format(p1.sk))
 
-		p1.set_keys()
-		p2.set_keys()
+    print("public key for " + p2.name + " : {}".format(p2.pk))
+    print("private key for " + p2.name + " : {}".format(p2.sk))
 
-		encrypted_message = p1.send_message('This is a test message.\n')
-		print(encrypted_message)
+    # encrypt the message 
+    cipher = p1.send_message(block_int)
+    print("cipher for " + p1.name + ": {}".format(cipher))
 
-		decrypted_message = p2.receive_message(encrypted_message)
-		print(decrypted_message)
+    # decrypt the message
+    block_int = p1.receive_message(cipher)
+    print("decrypt int: {}".format(block_int))
+
+    # convert int to string 
+    txt = td.to_string(block_int, len(txt))
+    print("Decrypted txt: {}".format(txt))
+
+   
