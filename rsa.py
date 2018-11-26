@@ -48,7 +48,7 @@ class RSA(object):
 
 	def encrypt(self, msg, key):
 		exponent, modulus = key 
-		cipher_text = pow(msg, exponent, modulus)
+		cipher_text = pow(int(msg), exponent, modulus)
 		return cipher_text
 
 	def decrypt(self, msg, key):

@@ -1,4 +1,4 @@
-First message.
-Received 1st.
-Return message.
-Received return.
+First message sent by Bob.
+Alice received a message from Bob.
+Bob sends another message to Alice.
+Alice received next message from Bob.
