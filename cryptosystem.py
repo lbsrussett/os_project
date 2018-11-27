@@ -65,8 +65,12 @@ if __name__ == "__main__":
     # print("Block int: {}".format(block_int))
     print("Alice wants to communicate with Bob securely.\n")
     print("Bob and Alice both calculate their public and secret keys.\n")
-    sleep(0.5)
-
+    
+    input("Press Enter to continue...\n")
+    
+    #=======================================
+    #   Calculate Keys
+    #=======================================
     p1 = person.Person('Alice',p,q)
     p2 = person.Person('Bob',p, q)
     #pow(2,31) - 1,pow(2,61) - 1
@@ -75,94 +79,124 @@ if __name__ == "__main__":
     print("public key for " + p1.name + " : {}\n".format(p1.pk))
     sleep(0.5)
     print("private key for " + p1.name + " : {}\n".format(p1.sk))
-    sleep(0.5)
+    
+    input("Press Enter to continue...\n")
 
     print("public key for " + p2.name + " : {}\n".format(p2.pk))
     sleep(0.5)
     print("private key for " + p2.name + " : {}\n".format(p2.sk))
-    sleep(0.5)
+    
+    input("Press Enter to continue...\n")
+
+    #===============================================
+    #    Pass Public Keys
+    #===============================================
 
     print("Alice sends Bob her public key: {}\n".format(p1.pk))
     sleep(0.5)
     print("Bob sends Alice his public key: {}\n".format(p2.pk))
     p2.other_pk = p1.pk
     p1.other_pk = p2.pk
-    sleep(0.5)
+    
+    input("Press Enter to continue...\n")
 
+    #================================================
+    #     Encrypt Message
+    #================================================
     text = messages[0].rstrip()
     print("Message to encrypt: {}".format(text))
-    sleep(0.5)
+    input("Press Enter to continue...\n")
+
     block_int = td.to_decimal(text)
     print("Block int created from the message text: {}\n".format(block_int))
+    input("Press Enter to continue...\n")
+
     #encrypt the message
     cipher = p2.send_message(block_int)
     sleep(0.5)
     print("Encrypted cipher for " + p2.name + ": {}\n".format(cipher))
+    input("Press Enter to continue...\n")
+
+    #====================================================
+    #     Decrypt Message
+    #====================================================
     #decrypt the message
     block_int = p1.receive_message(cipher)
     sleep(0.5)
     print("Decrypted int from cipher: {}\n".format(block_int))
+    input("Press Enter to continue...\n")
+
     #convert int to string
     txt = td.to_string(block_int, len(text))
     sleep(0.5)
     print("Decrypted text for " + p1.name + ": {}\n".format(txt))
 
+    input("Press Enter to continue...\n")
+    #======================================================
+    #    Second Message
+    #======================================================
     sleep(0.5)
     text = messages[1].rstrip()
     print("Message to encrypt: {}\n".format(text))
     sleep(0.5)
     block_int = td.to_decimal(text)
     print("Block int created from the message text: {}\n".format(block_int))
+    input("Press Enter to continue...\n")
+
     #encrypt the message
     cipher = p1.send_message(block_int)
     sleep(0.5)
     print("Encrypted cipher for " + p1.name + ": {}\n".format(cipher))
+    input("Press Enter to continue...\n")
+
     #decrypt the message
     block_int = p2.receive_message(cipher)
     sleep(0.5)
     print("Decrypted int from cipher: {}\n".format(block_int))
+    input("Press Enter to continue...\n")
+
     #convert int to string
     txt = td.to_string(block_int, len(text))
     sleep(0.5)
     print("Decrypted text for " + p2.name + ": {}\n".format(txt))
 
-    sleep(0.5)
-    text = messages[2].rstrip()
-    print("Message to encrypt: {}\n".format(text))
-    sleep(0.5)
-    block_int = td.to_decimal(text)
-    print("Block int created from message text: {}\n".format(block_int))
-    #encrypt the message
-    cipher = p2.send_message(block_int)
-    sleep(0.5)
-    print("Encrypted cipher for " + p2.name + ": {}\n".format(cipher))
-    #decrypt the message
-    block_int = p1.receive_message(cipher)
-    sleep(0.5)
-    print("Decrypted int from cipher: {}\n".format(block_int))
-    #convert int to string
-    txt = td.to_string(block_int, len(text))
-    sleep(0.5)
-    print("Decrypted text for " + p1.name + ": {}\n".format(txt))
+    # sleep(0.5)
+    # text = messages[2].rstrip()
+    # print("Message to encrypt: {}\n".format(text))
+    # sleep(0.5)
+    # block_int = td.to_decimal(text)
+    # print("Block int created from message text: {}\n".format(block_int))
+    # #encrypt the message
+    # cipher = p2.send_message(block_int)
+    # sleep(0.5)
+    # print("Encrypted cipher for " + p2.name + ": {}\n".format(cipher))
+    # #decrypt the message
+    # block_int = p1.receive_message(cipher)
+    # sleep(0.5)
+    # print("Decrypted int from cipher: {}\n".format(block_int))
+    # #convert int to string
+    # txt = td.to_string(block_int, len(text))
+    # sleep(0.5)
+    # print("Decrypted text for " + p1.name + ": {}\n".format(txt))
 
-    sleep(0.5)
-    text = messages[3].rstrip()
-    print("Message to encrypt: {}\n".format(text))
-    sleep(0.5)
-    block_int = td.to_decimal(text)
-    print("Block int creted from message text: {}\n".format(block_int))
-    #encrypt the message
-    cipher = p1.send_message(block_int)
-    sleep(0.5)
-    print("Encrypted cipher for " + p1.name + ": {}\n".format(cipher))
-    #decrypt the message
-    block_int = p2.receive_message(cipher)
-    sleep(0.5)
-    print("Decrypted int from cipher: {}\n".format(block_int))
-    #convert int to string
-    txt = td.to_string(block_int, len(text))
-    sleep(0.5)
-    print("Decrypted text for " + p2.name + ": {}\n".format(txt))
+    # sleep(0.5)
+    # text = messages[3].rstrip()
+    # print("Message to encrypt: {}\n".format(text))
+    # sleep(0.5)
+    # block_int = td.to_decimal(text)
+    # print("Block int creted from message text: {}\n".format(block_int))
+    # #encrypt the message
+    # cipher = p1.send_message(block_int)
+    # sleep(0.5)
+    # print("Encrypted cipher for " + p1.name + ": {}\n".format(cipher))
+    # #decrypt the message
+    # block_int = p2.receive_message(cipher)
+    # sleep(0.5)
+    # print("Decrypted int from cipher: {}\n".format(block_int))
+    # #convert int to string
+    # txt = td.to_string(block_int, len(text))
+    # sleep(0.5)
+    # print("Decrypted text for " + p2.name + ": {}\n".format(txt))
     
     
     
